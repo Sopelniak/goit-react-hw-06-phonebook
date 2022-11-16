@@ -1,33 +1,51 @@
-import PropTypes from 'prop-types';
-import s from './Form.module.scss';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addUser } from 'redux/users/users-actions';
+import { nanoid } from 'nanoid';
+import { selectContacts } from 'redux/users/users-selectors';
+import s from './Form.module.scss';
 
 const INITIAL_FORM_STATE = {
   name: '',
   number: '',
 };
 
-function AddContactForm({ addContact }) {
+function AddContactForm() {
   const [contact, setContact] = useState(INITIAL_FORM_STATE);
+  const contacts = useSelector(selectContacts);
+  const dispatch = useDispatch();
+
+  const addContact = () => {
+    const newContact = {
+      name: contact.name,
+      number: contact.number,
+      id: nanoid(),
+    };
+
+    if (
+      contacts.find(
+        contact => contact.name.toLowerCase() === newContact.name.toLowerCase()
+      )
+    ) {
+      return alert(`${newContact.name} is already in contacts`);
+    } else {
+      dispatch(addUser(newContact));
+    }
+  };
 
   const handleInput = ({ target: { name, value } }) => {
     setContact(prev => ({ ...prev, [name]: value }));
   };
 
-  const onSubmit = e => {
-    const { name, number } = e.target.elements;
+  const handleSubmit = e => {
     e.preventDefault();
-    addContact(name.value, number.value);
-    reset();
-  };
-
-  const reset = () => {
+    addContact();
     setContact({ name: '', number: '' });
   };
 
   return (
     <>
-      <form className={s.form} onSubmit={onSubmit}>
+      <form className={s.form} onSubmit={handleSubmit}>
         <label>
           <span>Name</span>
 
@@ -63,7 +81,3 @@ function AddContactForm({ addContact }) {
 }
 
 export { AddContactForm };
-
-AddContactForm.propTypes = {
-  addContact: PropTypes.func.isRequired,
-};

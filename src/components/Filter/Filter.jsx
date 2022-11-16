@@ -1,6 +1,14 @@
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { filterUsers } from 'redux/users/users-actions';
+import { selectFilter } from 'redux/users/users-selectors';
 
-function Filter({ filter, handleInput }) {
+function Filter() {
+  const filter = useSelector(selectFilter);
+  const dispatch = useDispatch();
+
+  const handleInput = e => {
+    dispatch(filterUsers(e.target.value))
+  };
   return (
     <>
       <label>
@@ -19,7 +27,3 @@ function Filter({ filter, handleInput }) {
 
 export { Filter };
 
-Filter.propTypes = {
-  filter: PropTypes.string.isRequired,
-  handleInput: PropTypes.func.isRequired,
-};

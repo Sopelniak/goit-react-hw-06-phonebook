@@ -1,11 +1,26 @@
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteUser } from 'redux/users/users-actions';
+import { selectContacts, selectFilter } from 'redux/users/users-selectors';
 import s from './Contacts.module.scss';
 
-function Contacts({ contacts, filterContacts, handleClickDelete }) {
+function Contacts() {
+  const contacts = useSelector(selectContacts);
+  const filter = useSelector(selectFilter);
+  const dispatch = useDispatch();
+
+  const handleClickDelete = e => {
+    dispatch(deleteUser(e.target.id));
+  };
+
+  const filteredContacts = contacts => {
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
+  };
   return (
     <>
       <ul>
-        {filterContacts(contacts).map(contact => (
+        {filteredContacts(contacts).map(contact => (
           <li className={s['contact-item']} key={contact.id}>
             <span className={s.name}>{contact.name}:</span>
             <div>
@@ -27,9 +42,3 @@ function Contacts({ contacts, filterContacts, handleClickDelete }) {
 }
 
 export { Contacts };
-
-Contacts.propTypes = {
-  filterContacts: PropTypes.func.isRequired,
-  handleClickDelete: PropTypes.func.isRequired,
-  contacts: PropTypes.array.isRequired,
-};
