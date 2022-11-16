@@ -2,8 +2,8 @@ import { AddContactForm } from './Form/AddContactForm';
 import { Section } from './Section/Section';
 import { Contacts } from './Contacts/Contacts';
 import { Filter } from './Filter/Filter';
-import {  useSelector } from 'react-redux';
-import { selectContacts,  } from 'redux/users/users-selectors';
+import { useSelector } from 'react-redux';
+import { selectContacts } from 'redux/users/users-selectors';
 
 function App() {
   const contacts = useSelector(selectContacts);
@@ -25,8 +25,6 @@ function App() {
   // useEffect(() => {
   //   localStorage.setItem('contacts', JSON.stringify(contacts));
   // }, [contacts]);
-
-
 
   return (
     <>

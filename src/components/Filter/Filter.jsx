@@ -6,16 +6,13 @@ function Filter() {
   const filter = useSelector(selectFilter);
   const dispatch = useDispatch();
 
-  const handleInput = e => {
-    dispatch(filterUsers(e.target.value))
-  };
   return (
     <>
       <label>
         <span>Find contacts by name</span>
 
         <input
-          onChange={handleInput}
+          onChange={e => dispatch(filterUsers(e.target.value))}
           value={filter}
           type="text"
           name="filter"
@@ -26,4 +23,3 @@ function Filter() {
 }
 
 export { Filter };
-

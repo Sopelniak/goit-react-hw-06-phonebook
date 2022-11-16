@@ -8,10 +8,6 @@ function Contacts() {
   const filter = useSelector(selectFilter);
   const dispatch = useDispatch();
 
-  const handleClickDelete = e => {
-    dispatch(deleteUser(e.target.id));
-  };
-
   const filteredContacts = contacts => {
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(filter.toLowerCase())
@@ -20,15 +16,15 @@ function Contacts() {
   return (
     <>
       <ul>
-        {filteredContacts(contacts).map(contact => (
-          <li className={s['contact-item']} key={contact.id}>
-            <span className={s.name}>{contact.name}:</span>
+        {filteredContacts(contacts).map(({id,name,number}) => (
+          <li className={s['contact-item']} key={id}>
+            <span className={s.name}>{name}:</span>
             <div>
-              <span className={s.number}>{contact.number}</span>
+              <span className={s.number}>{number}</span>
               <button
                 className={s['btn-delete']}
-                id={contact.id}
-                onClick={handleClickDelete}
+                id={id}
+                onClick={()=>dispatch(deleteUser(id))}
                 type="button"
               >
                 Delete
