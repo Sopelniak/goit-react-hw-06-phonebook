@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { filterUsers } from 'redux/users/users-actions';
+import { filterUsers } from 'redux/users/filterSlice';
 import { selectFilter } from 'redux/users/users-selectors';
 
 function Filter() {

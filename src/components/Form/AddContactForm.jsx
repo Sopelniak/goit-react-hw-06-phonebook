@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addUser } from 'redux/users/users-actions';
+import { addUser } from 'redux/users/contactsSlice';
 import { nanoid } from 'nanoid';
 import { selectContacts } from 'redux/users/users-selectors';
 import s from './Form.module.scss';
